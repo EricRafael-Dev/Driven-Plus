@@ -2,11 +2,20 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import person from "../assets/person.png"
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 export default function HomePage(props) {
     const { email } = props
     const { password } = props
     const [resposta, setResposta] = useState(null)
+    const { token } = props
+    const config = {
+            headers: {
+                "Authorization": `Bearer ${ token }`
+            }
+        }
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/auth/login'
@@ -17,6 +26,15 @@ export default function HomePage(props) {
         })
         request.catch(error => alert(error.response.data.message))
     }, [])
+
+
+    
+
+    function deletePlan() {
+        const request = axios.delete('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions', config)
+        request.then(() => navigate('/subscriptions'))
+        request.catch(error => alert(error.response.data.message))
+    }
 
 
     if (resposta === null) {
@@ -47,7 +65,7 @@ export default function HomePage(props) {
 
                     <Buttons>
                         <Button>Mudar plano</Button>
-                        <ButtonRed>Cancelar plano</ButtonRed>
+                        <ButtonRed onClick={deletePlan}>Cancelar plano</ButtonRed>
                     </Buttons>
 
                 </Body>

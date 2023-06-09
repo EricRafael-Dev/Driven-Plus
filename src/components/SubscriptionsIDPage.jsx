@@ -10,7 +10,7 @@ export default function SubscriptionsIDPage(props) {
 
     const config = {
         headers: {
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUyOSwiaWF0IjoxNjg2MzMwMzQ4fQ.ib8AqECv-YaiDXkBZ70Fghm3e7a_s50lgjrMzL_pbWM`
+            "Authorization": `Bearer ${ token }`
         }
     }
     const membershipId = useParams()

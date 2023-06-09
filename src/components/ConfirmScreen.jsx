@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import close from "../assets/Close.svg"
 
 export default function ConfirmScreen(props) {
     const { plan } = props
@@ -23,7 +24,7 @@ export default function ConfirmScreen(props) {
 
         const config = {
             headers: {
-                "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUyOSwiaWF0IjoxNjg2MzMwMzQ4fQ.ib8AqECv-YaiDXkBZ70Fghm3e7a_s50lgjrMzL_pbWM`
+                "Authorization": `Bearer ${ token }`
             }
         }
         const membershipId = parseInt(membershipIds.id_do_plano)
@@ -47,6 +48,9 @@ export default function ConfirmScreen(props) {
 
     return (
         <Background>
+            <Close onClick={nao}>
+                <img src={close} alt={close} />
+            </Close>
             <Confirm>
                 <P>Tem certeza que deseja assinar o plano {plan.data.name} (R$ {plan.data.price})?</P>
                 <Buttons>
@@ -58,6 +62,11 @@ export default function ConfirmScreen(props) {
     )
 }
 
+const Close = styled.div`
+    position:fixed;
+    top: 30px;
+    right: 35px;
+`
 const Background = styled.div`
     position:absolute;
     background-color: rgba(0, 0, 0, 0.7);
