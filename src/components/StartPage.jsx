@@ -4,10 +4,13 @@ import driven_logo from "../assets/driven_white.png"
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function StartPage() {
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+export default function StartPage(props) {
+    const {setToken} = props;
+    const {email} = props
+    const {setEmail} = props
+    const {password} = props
+    const {setPassword} = props
+    
     const navigate = useNavigate()
 
     function login(event) {
@@ -16,7 +19,10 @@ export default function StartPage() {
         const URL = 'https://mock-api.driven.com.br/api/v4/driven-plus/auth/login'
         const request = axios.post(URL, {email, password})
 
-        request.then((resposta) => ((resposta.data.membership == null) ? (navigate('/subscriptions')) : (navigate('/home'))))
+        request.then((resposta) => {
+            setToken(resposta.data.token);
+            (resposta.data.membership == null) ? (navigate('/subscriptions')) : (navigate('/home'))
+        })
         request.catch(error => alert(error.response.data.message))
     }
 

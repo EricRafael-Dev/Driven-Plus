@@ -33,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
         flex-direction:column;
         justify-content: center;
         align-items: center;
+        height: 100%;
     }
     ol, ul {
         list-style: none;

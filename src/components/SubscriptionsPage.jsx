@@ -1,35 +1,45 @@
 import styled from "styled-components"
-import silver from "../assets/Group 1.png"
-import gold from "../assets/Group 2.png"
-import platiumn from "../assets/Group 3.png"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
-export default function SubscriptionsPage() {
+export default function SubscriptionsPage(props) {
+
+    const { token } = props
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    }
+
+    const [plans, setPlans] = useState([])
+
+    const { idPlan } = useParams()
+    console.log(idPlan);
+
+    useEffect(() => {
+        const request = axios.get('https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships', config)
+        request.then(resposta => (setPlans(resposta.data)))
+    }, [])
+
+
+    const plan = plans.map(plan =>
+        <Link to={`/subscriptions/${plan.id}`} key={plan.id}>
+            <Plan>
+                <Img src={plan.image} alt={plan.image} />
+                <p>R$ {plan.price}</p>
+            </Plan>
+        </Link>)
+
+
+
     return (
         <Div>
             <Title>Escolha seu Plano</Title>
 
-            <Link>
-                <Plan>
-                    <Img src={silver} alt={silver} />
-                    <p>R$ 39,99</p>
-                </Plan>
-            </Link>
+            {plan}
 
-            <Link>
-                <Plan>
-                    <Img src={gold} alt={gold} />
-                    <p>R$ 69,99</p>
-                </Plan>
-            </Link>
-
-            <Link>
-                <Plan>
-                    <Img src={platiumn} alt={platiumn} />
-                    <p>R$ 99,99</p>
-                </Plan>
-            </Link>
-            
         </Div>
     )
 }

@@ -3,14 +3,16 @@ import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
 import SubscriptionsPage from './SubscriptionsPage';
 import SubscriptionsIDPage from './SubscriptionsIDPage';
-import axios from 'axios';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from 'react';
 
 export default function App() {
 
-    axios.defaults.headers.common['Authorization'] = '';
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [token, setToken] = useState('')
+    const [idPlan, setIdPlan] = useState('')
   
-    
     return (
       <>
         
@@ -18,11 +20,11 @@ export default function App() {
   
           <Routes>
   
-            <Route path='/' element={<StartPage />} />
+            <Route path='/' element={<StartPage setToken={setToken} email={email} setEmail={setEmail} password={password} setPassword={setPassword}/>} />
             <Route path='/sign-up' element={<SignUpPage />} />
-            <Route path='/subscriptions/:id_do_plano' element={<SubscriptionsIDPage />} />
-            <Route path='/subscriptions' element={<SubscriptionsPage />} />
-            <Route path='/home' element={<HomePage />} />
+            <Route path='/subscriptions/:id_do_plano' element={<SubscriptionsIDPage token={token} idPlan={idPlan}/>} />
+            <Route path='/subscriptions' element={<SubscriptionsPage token={token} setIdPlan={setIdPlan}/>} />
+            <Route path='/home' element={<HomePage token={token} email={email} password={password}/>} />
   
           </Routes>
   
